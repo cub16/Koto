@@ -1,0 +1,27 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95vw;
+  margin: 0 auto;
+}
+
+.header__customs {
+  width: 20%;
+}
+
+main {
+  width: 95vw;
+  height: 70vh;
+  margin: 0 auto;
+}
+
+#writer {
+  height: 100%;
+  width: 100%;
+  resize: none;
+}
+
+.hidden {
+  display: none;
+}
