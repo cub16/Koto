@@ -7,6 +7,10 @@ _**koto**_ is a small personal project I created for fun. It’s a simple text e
 - Basic text editing
 - Easy to use
 
+## Sounds
+
+from MonkeyType
+
 ## License
 
 Licensed under Apache 2.0 - cub16

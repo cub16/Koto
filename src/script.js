@@ -1,65 +1,100 @@
 // --- Themes & Focus ---
-let currentTheme = document.documentElement.getAttribute("data-theme");
+let currentTheme = $("html").attr("data-theme");
 let focusActive = false;
 
-document.querySelector("#theme").addEventListener("click", () => {
+$("#theme").click(() => {
   if (currentTheme === "dark") {
-    document.documentElement.setAttribute("data-theme", "light");
     currentTheme = "light";
-    document.querySelector("#theme").textContent = "☀";
+    $("html").attr("data-theme", "light");
+    $("#theme").text("☀");
   } else {
-    document.documentElement.setAttribute("data-theme", "dark");
     currentTheme = "dark";
-    document.querySelector("#theme").textContent = "🌙";
+    $("html").attr("data-theme", "dark");
+    $("#theme").text("🌙");
   }
 });
 
-document.querySelector("#focus").addEventListener("click", () => {
-  if (!focusActive) {
-    document.querySelector("#focus").textContent = "📘";
-    document.querySelectorAll(".dispensable").forEach((el) => {
-      el.style.visibility = "hidden";
-    });
-    document.querySelector("#writer").style.height = "150%";
-    focusActive = true;
-  } else {
-    document.querySelector("#focus").textContent = "📖";
-    document.querySelectorAll(".dispensable").forEach((el) => {
-      el.style.visibility = "visible";
-    });
-    document.querySelector("#writer").style.height = "100%";
+$("#focus").click(() => {
+  if (focusActive) {
     focusActive = false;
+    $("#focus").text("📘");
+    $(".dispensable").css("visibility", "visible");
+    $("#writer").css("height", "100%");
+  } else {
+    focusActive = true;
+    $("#focus").text("📖");
+    $(".dispensable").css("visibility", "hidden");
+    $("#writer").css("height", "150%");
   }
 });
 
 // --- Save & Load ---
-document.querySelector("#save").addEventListener("click", () => {
-  downloadText("text-" + Date.now(), document.querySelector("#writer").value);
+$("#save").click(() => {
+  downloadText("text-" + Date.now(), $("#writer").val());
 });
 
-document.querySelector("#load-input").addEventListener("change", (event) => {
+$("#load-input").change((event) => {
   const file = event.target.files[0];
 
-  if (file) {
-    if (file.type === "text/plain") {
-      const reader = new FileReader();
-
-      reader.onload = function () {
-        const content = reader.result;
-        document.querySelector("#writer").value = content;
-        document.querySelector("#load-input").value = "";
-      };
-
-      reader.readAsText(file, "utf-8");
-    } else {
-      alert("ERROR: File content is not plain text");
-      document.querySelector("#load-input").value = "";
-    }
+  if (file && file.type === "text/plain") {
+    const reader = new FileReader();
+    reader.onload = () => {
+      $("#writer").val(reader.result);
+      $("#load-input").val("");
+    };
+    reader.readAsText(file, "utf-8");
   } else {
-    return;
+    alert("ERROR: File content is not plain text");
+    $("#load-input").val("");
   }
 });
 
-document.querySelector("#load").addEventListener("click", () => {
-  document.querySelector("#load-input").click();
+$("#load").click(() => {
+  $("#load-input").click();
+});
+
+// Input & Sounds
+
+function getRandomSound() {
+  const clickSet = $("#custom-click").val();
+
+  const clicks = {
+    typewriter: [
+      "click5_1.wav",
+      "click5_2.wav",
+      "click5_11.wav",
+      "click5_33.wav",
+      "click5_55.wav",
+    ],
+    nk_creams: [
+      "click4_1.wav",
+      "click4_11.wav",
+      "click4_2.wav",
+      "click4_3.wav",
+      "click4_44.wav",
+    ],
+  };
+
+  try {
+    const selected =
+      clicks[clickSet][getRandomInt(0, clicks[clickSet].length - 1)];
+    return selected;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+$("#writer").on("input", function () {
+  if ($("#custom-click").val() == "disabled") {
+    return;
+  }
+
+  const customClick = new Audio(
+    `audios/${$("#custom-click").val()}/${getRandomSound()}`
+  );
+  customClick.volume = 1;
+  customClick.play();
+  customClick.addEventListener("ended", function () {
+    customClick.remove();
+  });
 });
