@@ -1,47 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>koto - simple text editor</title>
-    <link rel="stylesheet" href="modules/pico.min.css" />
-    <link rel="stylesheet" href="styles/custom.css" />
+    <title>Document</title>
+
+    <style>
+      * {
+        background: #000;
+      }
+    </style>
   </head>
-  <body>
-    <header>
-      <h3 class="dispensable">
-        <i>koto</i>
-      </h3>
-      <p class="dispensable">simple text editor</p>
-
-      <div>
-        <button id="theme">🌙</button>
-        <button id="focus">📘</button>
-      </div>
-    </header>
-
-    <main>
-      <textarea id="writer"></textarea>
-      <div role="group" class="dispensable">
-        <button id="save">💾 save</button>
-        <button id="load">📂 load</button>
-      </div>
-      <div role="group" class="dispensable">
-        <label for="custom-click">keyboard sound</label>
-        <select id="custom-click">
-          <option value="disabled">disabled</option>
-          <option value="nk_creams">nk creams</option>
-          <option value="typewriter">typewriter</option>
-        </select>
-      </div>
-    </main>
-
-    <div class="hidden">
-      <input type="file" id="load-input" accept=".txt" />
-    </div>
-
-    <script src="modules/jquery-3.7.1.min.js"></script>
-    <script src="src/utils.js"></script>
-    <script src="src/script.js"></script>
-  </body>
+  <body></body>
 </html>
